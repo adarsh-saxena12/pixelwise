@@ -1,6 +1,6 @@
 "use server";
 
-import GenerateImage from "@/lib/database/models/generate.model";
+
 import Image from "@/lib/database/models/image.model";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -120,6 +120,16 @@ export async function POST(
       width: 1000,
       height: 1778,
       secureURL: cloudinaryUrls[0] || "",
+      transformationUrl: cloudinaryRes?.secureURL,
+      aspectRatio: "9:16",
+      color: "transparent",
+      config: {
+        generate: {
+          prompt,
+          to: cloudinaryRes?.secureURL,
+          multiple: true,
+        },
+      },
       prompt,
       author: userId || null,
       createdAt: new Date(),
