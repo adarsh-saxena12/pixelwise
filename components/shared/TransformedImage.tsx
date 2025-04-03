@@ -19,7 +19,7 @@ const TransformedImage = ({ image, type, title, isTransforming, setIsTransformin
         src: image?.publicId,
         ...transformationConfig
       }), title)
-
+ 
     }
 
     return (
@@ -50,6 +50,7 @@ const TransformedImage = ({ image, type, title, isTransforming, setIsTransformin
            {
             image?.publicId && transformationConfig ? (
                   <div className="relative">
+                    
                     <CldImage
                          width={getImageSize(type, image, "width")}
                          height={getImageSize(type, image, "height")}
@@ -85,7 +86,7 @@ const TransformedImage = ({ image, type, title, isTransforming, setIsTransformin
                      }
                   </div>
             ): (
-              <div className="transformed-placeholder">
+              <div className="transformed-placeholder dark:text-gray-300">
                  Transformed Image
               </div>
             )

@@ -34,6 +34,7 @@ import { getCldImageUrl } from "next-cloudinary"
 import { addImage, updateImage } from "@/lib/actions/image.actions"
 import { useRouter } from "next/navigation"
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal"
+import { Save, Wand2 } from "lucide-react"
  
 export const formSchema = z.object({
   title: z.string(),
@@ -182,7 +183,7 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
      setNewTransformation(transformationType.config)
     }
   }, [image, transformationType.config, type])
-
+  
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -192,7 +193,7 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
           control={form.control}
           name="title"
           formLabel="Image Title"
-          className="w-full"
+          className="w-full dark:text-gray-300"
           render={({ field }) => <Input {...field} className="input-field" />}
         />
 
@@ -201,14 +202,15 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
             control={form.control}
             name="aspectRatio"
             formLabel="Aspect Ratio"
-            className="w-full"
+            className="w-full dark:text-gray-300"
             render={({ field }) => (
               <Select
                 onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}
                 value={field.value}
+                
               >
                 <SelectTrigger className="select-field">
-                  <SelectValue placeholder="Select size" />
+                  <SelectValue placeholder="Select size"/>
                 </SelectTrigger>
                 <SelectContent>
                   {Object.keys(aspectRatioOptions).map((key) => (
@@ -230,7 +232,7 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
               formLabel={
                 type === 'remove' ? 'Object to remove' : 'Object to recolor'
               }
-              className="w-full"
+              className="w-full dark:text-gray-300"
               render={({ field }) => (
                 <Input 
                   value={field.value}
@@ -250,7 +252,7 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
                 control={form.control}
                 name="color"
                 formLabel="Replacement Color"
-                className="w-full"
+                className="w-full dark:text-gray-300"
                 render={({ field }) => (
                   <Input 
                     value={field.value}
@@ -268,7 +270,7 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
           </div>
         )}
 
-        <div className="media-uploader-field">
+        <div className="media-uploader-field dark:text-gray-300">
           <CustomField 
             control={form.control}
             name="publicId"
@@ -300,14 +302,14 @@ const onSelectFieldHandler = (value: string, onChangeField: (value: string) => v
             className="submit-button capitalize"
             disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
-          >
+          > {!isTransforming && <Wand2 className="h-4 w-6 transition-transform group-hover:rotate-12" />}
             {isTransforming ? 'Transforming...' : 'Apply Transformation'}
           </Button>
           <Button 
             type="submit"
             className="submit-button capitalize"
             disabled={isSubmitting}
-          >
+          > {!isSubmitting && <Save className="h-[20px] w-8 transition-transform group-hover:-translate-y-0.5"/>}
             {isSubmitting ? 'Submitting...' : 'Save Image'}
           </Button>
         </div>

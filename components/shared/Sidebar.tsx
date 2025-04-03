@@ -9,14 +9,14 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 import { Button } from "@/components/ui/button"
 import { UserButton } from '@clerk/nextjs';
-
+import { ModeToggle } from './ToggleTheme';
 
 const Sidebar = () => {
 
     const pathname = usePathname();
 
     return (
-        <aside className='sidebar'>
+        <aside className='sidebar bg-background text-foreground dark:bg-background dark:text-foreground'>
             <div className='flex size-full flex-col gap-4'>
                <Link href="/" className='sidebar-logo'>
                <Image
@@ -27,15 +27,18 @@ const Sidebar = () => {
                />
                </Link>
                <nav  className='sidebar-nav'>
+                    
                     <SignedIn>
+                        
                         <ul className='sidebar-nav_elements'>
                           {
-                            navLinks.slice(0, 6).map((link) => {
+                            navLinks.slice(0, 7).map((link) => {
                                 const isActive = link.route === pathname;
 
                                 return (
                                     <li
-                                    key={link.route} className={`sidebar-nav_element group ${isActive ? 'bg-purple-gradient text-white':'text-gray-700'}`}>
+                                    key={link.route} 
+                                    className={`sidebar-nav_element group ${isActive ? 'bg-purple-gradient text-white':'text-gray-700 dark:text-gray-300'} dark:hover:text-gray-200`}>
                                     <Link className='sidebar-link'
                                     href={link.route}
                                     >
@@ -59,12 +62,12 @@ const Sidebar = () => {
                         <ul className='sidebar-nav_elements'>
                         
                           {
-                            navLinks.slice(6).map((link) => {
+                            navLinks.slice(7).map((link) => {
                                 const isActive = link.route === pathname;
 
                                 return (
                                     <li
-                                    key={link.route} className={`sidebar-nav_element group ${isActive ? 'bg-purple-gradient text-white':'text-gray-700'}`}>
+                                    key={link.route} className={`sidebar-nav_element group ${isActive ? 'bg-purple-gradient text-white':'text-gray-700 dark:text-gray-300'}`}>
                                     <Link className='sidebar-link'
                                     href={link.route}
                                     >
@@ -86,10 +89,11 @@ const Sidebar = () => {
                         <li className='flex-center cursor-pointer gap-2 p-4'>
                           <UserButton afterSignOutUrl='/'/>
                         </li>
+                        <ModeToggle />
                         </ul>
-
+                    
                     </SignedIn>
-
+                     
                     <SignedOut>
                     <Button 
                     variant="outline"

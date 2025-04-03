@@ -42,14 +42,14 @@ export const Collection = ({
       key: "page",
       value: pageValue,
     });
-
+    
     router.push(newUrl, { scroll: false });
   };
-
+  
   return (
     <>
       <div className="collection-heading">
-        <h2 className="h2-bold text-dark-600">Recent Edits</h2>
+        <h2 className="h2-bold text-dark-600 dark:text-gray-300 ">Recent Edits</h2>
         {hasSearch && <Search />}
       </div>
 
@@ -97,7 +97,9 @@ export const Collection = ({
 const Card = ({ image }: { image: IImage }) => {
   return (
     <li>
-      <Link href={`/transformations/${image._id}`} className="collection-card">
+      <Link 
+      href={`/transformations/${image._id}`} 
+      className="collection-card bg-background text-foreground dark:bg-background dark:text-gray-300 dark:hover:[background-color:#1F222A]">
         <CldImage
           src={image.publicId}
           alt={image.title}
@@ -109,14 +111,14 @@ const Card = ({ image }: { image: IImage }) => {
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
         />
         <div className="flex-between">
-          <p className="p-20-semibold mr-3 line-clamp-1 text-dark-600">
+          <p className="p-20-semibold mr-3 line-clamp-1 text-dark-600 dark:text-foreground">
             {image.title}
           </p>
           <Image
             src={`/assets/icons/${
               transformationTypes[
                 image.transformationType as TransformationTypeKey
-              ].icon
+              ]?.icon
             }`}
             alt={image.title}
             width={24}

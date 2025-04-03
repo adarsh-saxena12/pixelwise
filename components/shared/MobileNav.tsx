@@ -17,6 +17,7 @@ import { navLinks } from '@/constants';
 import { usePathname } from 'next/navigation';
 import { SignedOut } from '@clerk/nextjs';
 import { Button } from '../ui/button';
+import { ModeToggle } from './ToggleTheme';
 Button
   
 
@@ -40,7 +41,6 @@ const MobileNav = () => {
             
             <Sheet>
             <SheetTrigger>
-                
             <Image
             src="/assets/icons/menu.svg"
             alt='menu'
@@ -84,10 +84,12 @@ const MobileNav = () => {
                                 )
                             })
                           }
+                          <ModeToggle />
                          </ul>
                </>
              </SheetContent>
            </Sheet>
+           
            </SignedIn>
 
            <SignedOut>

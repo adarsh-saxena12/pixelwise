@@ -16,6 +16,7 @@ import {
 import { deleteImage } from "@/lib/actions/image.actions";
 
 import { Button } from "../ui/button";
+import {Trash } from "lucide-react";
 
 export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
   const [isPending, startTransition] = useTransition();
@@ -27,7 +28,7 @@ export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
           type="button"
           className="button h-[44px] w-full md:h-[54px]"
           variant="destructive"
-        >
+        ><Trash className="w-6 h-6" />
           Delete Image
         </Button>
       </AlertDialogTrigger>

@@ -30,6 +30,11 @@ export const navLinks = [
       icon: "/assets/icons/camera.svg",
     },
     {
+      label: "Generate Image",
+      route: "/generate",
+      icon: "/assets/icons/camera.svg",
+    },
+    {
       label: "Profile",
       route: "/profile",
       icon: "/assets/icons/profile.svg",
@@ -158,6 +163,15 @@ export const navLinks = [
         recolor: { prompt: "", to: "", multiple: true },
       },
       icon: "filter.svg",
+    },
+    generate: {
+      type: "generate",
+      title: "Generate Image",
+      subTitle: "Generate an image based on a prompt",
+      config: {
+        generate: { prompt: "", to: "", multiple: true },
+      },
+      icon: "stars.svg",
     },
   };
   

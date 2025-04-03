@@ -2,21 +2,20 @@ import React from 'react';
 import Sidebar from '@/components/shared/Sidebar';
 import MobileNav from '@/components/shared/MobileNav';
 import { Toaster } from '@/components/ui/toaster';
-MobileNav
 
-const Layout = ({ children}:{children:React.ReactNode}) => {
-    return (
-        <main className='root'>
-            <Sidebar />
-            <MobileNav />
-            <div className='root-container'>
-                <div className='wrapper'>
-                {children}
-                </div>
-            </div>
-            <Toaster />
-        </main>
-    );
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <main className='root bg-background text-foreground dark:bg-background dark:text-foreground'>
+      <Sidebar />
+      <MobileNav />
+      <div className='root-container'>
+        <div className='wrapper'>
+          {children}
+        </div>
+      </div>
+      <Toaster />
+    </main>
+  );
 };
 
 export default Layout;

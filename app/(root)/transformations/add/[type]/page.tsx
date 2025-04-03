@@ -14,7 +14,6 @@ const AddTransformationType = async ({ params: { type }}:SearchParamProps) => {
     if(!userId) redirect('/sign-in')
 
     const user = await getUserById(userId);
-
     const transformation = transformationTypes[type];
 
     return (

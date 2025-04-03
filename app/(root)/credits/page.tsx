@@ -31,8 +31,8 @@ const Credits = async () => {
                 <p className="p-20-semibold mt-2 text-purple-500">
                   {plan.name}
                 </p>
-                <p className="h1-semibold text-dark-600">${plan.price}</p>
-                <p className="p-16-regular">{plan.credits} Credits</p>
+                <p className="h1-semibold text-dark-600 dark:text-gray-300">${plan.price}</p>
+                <p className="p-16-regular dark:text-gray-300">{plan.credits} Credits</p>
               </div>
 
               {/* Inclusions */}
