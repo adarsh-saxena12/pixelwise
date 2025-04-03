@@ -1,6 +1,5 @@
 "use server";
 
-
 import Image from "@/lib/database/models/image.model";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
