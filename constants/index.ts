@@ -46,6 +46,13 @@ export const navLinks = [
     },
   ];
   
+  export const examplePrompts = [
+    { title: "Flying pig over futuristic city", prompt: "A 3D rendered image of a pig with wings and a top hat flying over a futuristic city with lots of greenery." },
+    { title: "Mountain landscape at sunset", prompt: "A photorealistic mountain landscape with a calm lake and colorful sunset." },
+    { title: "Magical forest", prompt: "A magical forest with glowing mushrooms, fairy lights, and mystical creatures." },
+    { title: "Cyberpunk street scene", prompt: "A cyberpunk street scene with neon lights, robots, and futuristic vehicles." }
+  ];
+
   export const plans = [
     {
       _id: 1,

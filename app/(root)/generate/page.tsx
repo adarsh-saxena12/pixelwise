@@ -1,21 +1,74 @@
+
 "use client";
 
 import React, { useState, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import { Sparkles, Image as ImageIcon, X, Download, ArrowRight, Mic, MicOff, MicIcon } from "lucide-react";
 import formatText from "@/components/shared/FormatText";
 import { ImageCard } from "@/components/shared/ImageCard";
+import {examplePrompts} from "@/constants/index";
+
+//complete type definitions for SpeechRecognition
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+  resultIndex: number;
+  interpretation: any;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  item(index: number): SpeechRecognitionResult;
+  [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionResult {
+  length: number;
+  item(index: number): SpeechRecognitionAlternative;
+  [index: number]: SpeechRecognitionAlternative;
+  isFinal: boolean;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence: number;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  maxAlternatives: number;
+  onaudioend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onaudiostart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onerror: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onnomatch: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
+  onsoundend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onsoundstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onspeechend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onspeechstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): SpeechRecognition;
+  prototype: SpeechRecognition;
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+}
 
 interface GenerateResponse {
   text: string;
   images: string[];  
 }
-
-const examplePrompts = [
-  { title: "Flying pig over futuristic city", prompt: "A 3D rendered image of a pig with wings and a top hat flying over a futuristic city with lots of greenery." },
-  { title: "Mountain landscape at sunset", prompt: "A photorealistic mountain landscape with a calm lake and colorful sunset." },
-  { title: "Magical forest", prompt: "A magical forest with glowing mushrooms, fairy lights, and mystical creatures." },
-  { title: "Cyberpunk street scene", prompt: "A cyberpunk street scene with neon lights, robots, and futuristic vehicles." }
-];
 
 export default function Home() {  
   const [prompt, setPrompt] = useState<string>("");
@@ -35,26 +88,29 @@ export default function Home() {
   }, [generatedContents]);
 
   useEffect(() => {
-    if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-      const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true;
-      recognitionRef.current.lang = "en-US";
+    // Checking if SpeechRecognition is available in the browser
+    if (typeof window !== 'undefined') {
+      const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+      
+      if (SpeechRecognitionAPI) {
+        recognitionRef.current = new SpeechRecognitionAPI();
+        recognitionRef.current.continuous = true;
+        recognitionRef.current.interimResults = true;
+        recognitionRef.current.lang = "en-US";
 
-      recognitionRef.current.onstart = () => {
-        setIsListening(true);
-      };
+        recognitionRef.current.onstart = () => {
+          setIsListening(true);
+        };
 
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-      };
+        recognitionRef.current.onend = () => {
+          setIsListening(false);
+        };
 
-      recognitionRef.current.onresult = (event:any) => {
-        const transcript = event.results[0][0].transcript;
-        setPrompt(transcript);
-      };
+        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+          const transcript = event.results[0][0].transcript;
+          setPrompt(transcript);
+        };
+      }
     }
   }, []);
 

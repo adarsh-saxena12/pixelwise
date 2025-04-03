@@ -109,8 +109,6 @@ export async function POST(
       }
     }
 
-    console.log("cloudinaryUrls: ", cloudinaryUrls);
-
     // Connect to database
     await connectToDatabase();
     
@@ -118,12 +116,12 @@ export async function POST(
     await Image.create({
       title: prompt,
       transformationType: "generate",
-      publicId: cloudinaryRes?.publicId, // Ensure correct format
+      publicId: cloudinaryRes?.publicId,
       width: 1000,
       height: 1778,
-      secureURL: cloudinaryUrls[0] || "", // Store the first image
+      secureURL: cloudinaryUrls[0] || "",
       prompt,
-      author: userId || null, // If no user is provided, store as anonymous
+      author: userId || null,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
